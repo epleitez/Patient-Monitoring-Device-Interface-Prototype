@@ -1,4 +1,4 @@
-# CMSC437-FinalProj
+# Patient Monitoring Device Interface Prototype
 CMSC 437 - Summer 24
 Project Definition
 
