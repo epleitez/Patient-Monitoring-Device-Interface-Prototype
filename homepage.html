@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Monitor</title>
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    }
+
+    .time{
+        font-size: 60px
+    }
+
+    .screen {
+        width: 1000px;
+        margin: 100px;
+        padding: 20px;
+        height: 777px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: grey;
+    }
+
+    .screen h1{
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+    .patient-info, .vitals {
+
+        padding: 10px;
+        margin: 30px 0; 
+        background-color: #a7bcc2; 
+        width: 250px;
+        border-radius: 8px;
+
+    }
+
+    .patient-info h2, .vitals h2 {
+        background-color: #333; 
+        color: white;
+        padding: 5px;
+        margin-top: 0; 
+
+        border-radius: 5px;
+    }
+
+    .patient-info p, .vitals p {
+        font-size: 17px;
+    }
+
+    .main-content {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .info-graphs {
+        display: flex;
+        align-items: center; 
+    }
+
+    .left-panel {
+        margin-right: 30px; 
+        border: black;
+    }
+
+    .graphs {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .graph1 p, .graph2 p, .graph3 p, .graph4 p{
+        font-size: 13px;
+        margin:5px;
+        font-weight: 600;
+    }
+
+    .graph1 img, .graph2 img, .graph3 img, .graph4 img{
+        width: 465px;
+        height: 115px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .controls {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start; 
+        margin-left: 28px;
+        margin-top: 80px;
+    }
+
+    .controls button {
+        background-color:#333d93;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        width: 200px;
+        height: 70px;
+        margin-right: 30px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    #powerButton {
+        background-color: black; 
+        color: white;
+    }
+
+
+    #powerButton:hover {
+        opacity: 0.8;
+        background-color: #3d3d3d;
+    }
+
+
+    .controls button:hover {
+        background-color: #171f5d;
+    }
+
+    .network-status {
+        padding:10px;
+    }
+</style>
+<body>
+    <div class="screen">
+        <header>
+            <h1>PATIENT MONITOR</h1>
+            <div class="status-bar">
+                <div class="time" id="time"></div>
+                <div class="network-status">Network: Connected</div>
+            </div>
+        </header>
+        <div class="main-content">
+            <div class="info-graphs">
+                <div class="left-panel">
+                    <div class="patient-info">
+                        <h2>Patient Info:</h2>
+                        <p>Name:</p>
+                        <p>Gender:</p>
+                        <p>Age:</p>
+                        <p>Prescription:</p>
+                        <p>Incident:</p>
+                    </div>
+                    <div class="vitals">
+                        <h2>Vitals:</h2>
+                        <p>Heart Rate:</p>
+                        <p>Blood Pressure:</p>
+                        <p>SP02:</p>
+                        <p>Respiration:</p>
+                        <p>Body Temp:</p>
+                    </div>
+                </div>
+                <div class="graphs">
+                    <div class="graph1">
+                        <p>EKG</p>
+                        <img src="ecg.gif" alt="graph1">
+                    </div>
+                    <div class="graph2">
+                        <p>ECG</p>
+                        <img src="ekg.gif" alt="graph2">
+                    </div>
+                    <div class="graph3">
+                        <p>PLETH</p>
+                        <img src="pleth.gif" alt="graph3">
+                    </div>
+                    <div class="graph4">
+                        <p>CAPNO</p>
+                        <img src="capno.gif" alt="graph4">
+                    </div>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="powerButton">Power on/off</button>
+                <button onclick="window.location.href='addNewPatient.html'">Add New Patient</button>
+                <button onclick="window.location.href='patientList.html'">Patient List</button>
+            </div>
+        </div>
+    </div>
+    <script src="homepage.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+

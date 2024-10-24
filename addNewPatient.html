@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Patient</title>
+    <style>
+        html, body {
+          height: 100%;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      
+        #root {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+        }
+      
+        #app {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 400px;
+          background-color: #a7bcc2;
+          border-radius: 10px;
+        }
+      
+        h1 { 
+            margin-bottom: 10px;
+            margin-top:10px;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px; 
+            width: 85%;
+        }
+      
+        .form-container {
+          width: 70%; 
+          display: flex; 
+          align-items: center; 
+          margin-bottom: 10px;
+        }
+      
+        .form-group {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        label {
+          color: black;
+          display: flex;
+        }
+      
+        input {
+          padding: 5px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          width: 100%; /
+        }
+      
+        input:focus {
+          border: none;
+          outline: 2px solid palegreen;
+        }
+      
+        input.error {
+          border-color: red;
+        }
+      
+        .form-group-button {
+            display: flex;
+            justify-content: center; 
+            width: 100%; 
+        }  
+      
+        button {
+          padding: 10px 20px;
+          border: none;
+          border-radius: 4px;
+          background-color: #333d93;
+          color: white;
+          cursor: pointer;
+
+        }
+
+        button#home-button {
+          background-color: #12a138;
+        }
+
+        button:hover {
+          background-color: #171f5d;
+        }
+
+        button#home-button:hover {
+          background-color: #0d7429;
+        }
+
+      
+        #nav-buttons {
+          margin-top: 10px;
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+        }
+      </style>
+</head>
+<body>
+    <div id="root">
+        <div id="app">
+            <h1>Add New Patient</h1>
+            <div class="form-container">
+                <form id="addPatientForm">
+                    <div class="form-group">
+                        <label for="patientName">Name:</label>
+                        <input type="text" id="patientName" placeholder="Enter Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientGender">Gender:</label>
+                        <input type="text" id="patientGender" placeholder="Enter Gender" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientAge">Age:</label>
+                        <input type="number" id="patientAge" placeholder="Enter Age" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientPrescription">Prescription:</label>
+                        <input type="text" id="patientPrescription" placeholder="Enter Prescription" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientIncident">Incident:</label>
+                        <input type="text" id="patientIncident" placeholder="Enter Incident" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientHeartRate">Heart Rate:</label>
+                        <input type="number" id="patientHeartRate" placeholder="Enter Heart Rate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientBloodPressure">Blood Pressure:</label>
+                        <input type="text" id="patientBloodPressure" placeholder="Enter Blood Pressure" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientSP02">SP02:</label>
+                        <input type="text" id="patientSP02" placeholder="Enter SP02" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientRespiration">Respiration:</label>
+                        <input type="text" id="patientRespiration" placeholder="Enter Respiration" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientBodyTemp">Body Temp:</label>
+                        <input type="number" id="patientBodyTemp" placeholder="Enter Body Temp" required>
+                    </div>
+
+                    <div class="form-group-button">
+                        <button id="submit-button" type="submit">Submit</button>
+                        <button id="home-button" onclick="window.location.href='homepage.html'">Home</button>
+                        <button id="patient-list" onclick="window.location.href='patientList.html'">Patient List</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const editIndex = sessionStorage.getItem('editIndex');
+            if (editIndex !== null) {
+                const patients = JSON.parse(localStorage.getItem('patients') || '[]');
+                const editPatient = JSON.parse(sessionStorage.getItem('editPatient'));
+
+                // Pre-fill the form with editPatient data
+                document.getElementById('patientName').value = editPatient.name;
+                document.getElementById('patientGender').value = editPatient.gender;
+                document.getElementById('patientAge').value = editPatient.age;
+                document.getElementById('patientPrescription').value = editPatient.prescription;
+                document.getElementById('patientIncident').value = editPatient.incident;
+                document.getElementById('patientHeartRate').value = editPatient.heartRate;
+                document.getElementById('patientBloodPressure').value = editPatient.bloodPressure;
+                document.getElementById('patientSP02').value = editPatient.sp02;
+                document.getElementById('patientRespiration').value = editPatient.respiration; // Added
+                document.getElementById('patientBodyTemp').value = editPatient.bodyTemp;
+
+                // Change submit button text for edit mode
+                document.getElementById('submit-button').textContent = 'Update';
+            }
+        });
+
+        document.getElementById('addPatientForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('patientName').value;
+            const gender = document.getElementById('patientGender').value;
+            const age = document.getElementById('patientAge').value;
+            const prescription = document.getElementById('patientPrescription').value;
+            const incident = document.getElementById('patientIncident').value;
+            const heartRate = document.getElementById('patientHeartRate').value;
+            const bloodPressure = document.getElementById('patientBloodPressure').value;
+            const sp02 = document.getElementById('patientSP02').value;
+            const respiration = document.getElementById('patientRespiration').value; // Added
+            const bodyTemp = document.getElementById('patientBodyTemp').value;
+
+            const newPatient = {
+                name,
+                gender,
+                age,
+                prescription,
+                incident,
+                heartRate,
+                bloodPressure,
+                sp02,
+                respiration, // Added
+                bodyTemp
+            };
+            const patients = JSON.parse(localStorage.getItem('patients') || '[]');
+
+            const editIndex = sessionStorage.getItem('editIndex');
+            if (editIndex !== null) {
+                // Update existing patient data
+                patients[editIndex] = newPatient;
+                localStorage.setItem('patients', JSON.stringify(patients));
+
+                alert('Patient updated successfully!');
+            } else {
+                // Add new patient data
+                patients.push(newPatient);
+                localStorage.setItem('patients', JSON.stringify(patients));
+
+                alert('Patient added successfully!');
+            }
+
+            // Reset form and session storage
+            sessionStorage.removeItem('editIndex');
+            sessionStorage.removeItem('editPatient');
+            document.getElementById('addPatientForm').reset();
+        });
+    </script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            width: 70%;
+        }
+        #search-bar-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        #search-input {
+            width: 60%;
+            max-width: 600px;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        #patient-list-container {
+            width: 80%;
+            max-width: 600px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #patientList {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .patient-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .patient-name {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .button-container {
+            display: flex;
+        }
+        .button-edit, .button-delete, .button-select {
+            padding: 5px 10px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+        .button-edit {
+            background-color: #4CAF50;
+        }
+        .button-delete {
+            background-color: #f44336;
+        }
+        .button-select {
+            background-color: #333d93; 
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            background-color: #333d93;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #171f5d;
+        }
+        #buttons-container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Patient List</h1>
+
+    <div id="search-bar-container">
+        <input id="search-input" type="text" placeholder="Search by name..." oninput="filterPatients()">
+    </div>
+
+    <div id="patient-list-container">
+        <ul id="patientList"></ul>
+    </div>
+
+    <div id="buttons-container">
+        <button id="home-button" onclick="window.location.href='homepage.html'">Home</button>
+        <button id="add-patient-button" onclick="window.location.href='addNewPatient.html'">Add New Patient</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const patientListElement = document.getElementById('patientList');
+            const patients = JSON.parse(localStorage.getItem('patients') || '[]');
+    
+            function displayPatients(patientsToDisplay) {
+                patientListElement.innerHTML = '';
+                patientsToDisplay.forEach((patient, index) => {
+                    const li = document.createElement('li');
+                    li.classList.add('patient-item');
+    
+                    const nameSpan = document.createElement('span');
+                    nameSpan.textContent = `Name: ${patient.name}, Gender: ${patient.gender}, Age: ${patient.age}`;
+                    nameSpan.classList.add('patient-name');
+    
+                    const buttonContainer = document.createElement('div');
+                    buttonContainer.classList.add('button-container');
+    
+                    const selectBtn = document.createElement('button');
+                    selectBtn.textContent = 'Select';
+                    selectBtn.className = 'button-select';
+                    selectBtn.onclick = () => {
+                        localStorage.setItem('selectedPatient', JSON.stringify(patient));
+                        window.location.href = 'homepage.html'; // Redirect to homepage
+                    };
+    
+                    const editBtn = document.createElement('button');
+                    editBtn.textContent = 'Edit';
+                    editBtn.className = 'button-edit';
+                    editBtn.onclick = () => {
+                        sessionStorage.setItem('editIndex', index);
+                        sessionStorage.setItem('editPatient', JSON.stringify(patient)); 
+                        window.location.href = 'addNewPatient.html'; // Redirect to edit patient
+                    };
+    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = 'Delete';
+                    deleteBtn.className = 'button-delete';
+                    deleteBtn.onclick = () => {
+                        patients.splice(index, 1);
+                        localStorage.setItem('patients', JSON.stringify(patients));
+                        displayPatients(patients); // Refresh the list
+                    };
+    
+                    buttonContainer.appendChild(selectBtn);
+                    buttonContainer.appendChild(editBtn);
+                    buttonContainer.appendChild(deleteBtn);
+    
+                    li.appendChild(nameSpan);
+                    li.appendChild(buttonContainer);
+                    patientListElement.appendChild(li);
+                });
+            }
+    
+            function filterPatients() {
+                const searchValue = document.getElementById('search-input').value.trim().toLowerCase();
+                const filteredPatients = patients.filter(patient =>
+                    patient.name.toLowerCase().includes(searchValue)
+                );
+                displayPatients(filteredPatients);
+            }
+    
+            // Initial display of all patients
+            displayPatients(patients);
+    
+            // Event listener for search input
+            document.getElementById('search-input').addEventListener('input', filterPatients);
+        });
+    </script>
+    
+</body>
+</html>
+
+
+
+
+
